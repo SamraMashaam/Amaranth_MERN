@@ -1,0 +1,247 @@
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #272424;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+
+}
+
+  .creatorForm 
+  {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 50px;
+    background: #56021F;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  h2
+  {
+    font-family: 'Futura', 'Trebuchet MS', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #D17D98;
+    letter-spacing: 1px;
+    padding-top: 30px;
+  }
+
+  p
+  {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #D17D98;
+    text-align: center;
+  }
+
+  label
+  {
+    display: block;
+    font-size: 1rem;
+    color: #D17D98;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  input
+  {
+    width: 95%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #272424;
+    background-color: #F4CCE9;
+    transition: border-color 0.3s ease;
+  }
+
+  button {
+    width: 30%;
+    padding: 0.8rem;
+    background-color: #D17D98;
+    color: #56021F;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 3rem;
+    font-weight: bold;
+    display: block;
+    margin: 2rem auto;
+  }
+
+  button:hover
+  {
+    background-color:#b0687f;
+  }
+
+  button:active
+  {
+    background-color: #56021F;
+    color:#D17D98;
+  }
+  
+  .settings-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 50px;
+    background: #56021F;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .settings-title {
+    margin-top: 1px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .creator-label {
+    color: #D17D98;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  /* Grid layout */
+  .settings-grid {
+    display: flexbox;
+    grid-template-columns: 1fr 1fr 100px;
+    gap: 15px;
+  }
+  
+  .settings-row {
+    display: contents;
+  }
+  
+  /* Label Styling */
+  .settings-label {
+    font-weight: bold;
+    text-transform: capitalize;
+    align-self: center;
+  }
+  
+  /* User Info Text Color */
+  .settings-value {
+    color: #f8acc4;
+    font-weight: bold;
+    align-self: center;
+  }
+  
+  /* Input Field Styling */
+  .settings-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #F4CCE9;
+    border-radius: 4px;
+  }
+  
+  /* Buttons */
+  .edit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #D17D98;
+    color: #56021F;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 3rem;
+    font-weight: bold;
+    display: block;
+    margin: 2rem auto;
+  }
+  
+  .save-btn{
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #831c40;
+    color:#D17D98;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 3rem;
+    font-weight: bold;
+    display: block;
+    margin: 2rem auto;
+  }
+
+  .edit-btn:hover {
+    background-color:#b0687f;
+  }
+  
+  .save-btn:hover{
+    background-color:#3d0418;
+  }
+
+  .fllw-button, .sub-button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #D17D98;
+    color: #56021F;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 3rem;
+    font-weight: bold;
+    display: block;
+    margin: 2rem auto;
+  }
+
+  .fllw-button:hover, .sub-button:hover {
+    background-color:#b0687f;
+  }
+
+  .fllw-button:active, .sub-button:active {
+    background-color: #56021F;
+    color:#D17D98;
+  }
+
+  .creator-link {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #272424;
+    color: #F4CCE9;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .creator-link:hover {
+    background: #831c40;
+  }
+
+  .creator-card
+  {
+    background-color: #3d0418;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    width: 250px;
+  }
+
+  .creator-card:hover {
+    transform: scale(1.05);
+  }
+
+  .creator-list {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: flex-start;
+    text-align: left; /* Ensures text aligns left */
+  }
+  
+
+  .Ccontainer {
+    max-width: 800px;
+    margin: 20px; /* Only adds space, does NOT center */
+    padding: 20px;
+  }
+  
+  
