@@ -58,4 +58,35 @@ const loginCreator = async (req, res) => {
     }
 };
 
-module.exports = {registerCreator, loginCreator};
+const getCreator = async (req,res) => {
+    try{
+        const creators = await Creator.find().select('username');
+        res.json(creators);
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+const donateCreator = async (req, res) => {
+    const { amount } = req.body;
+    const { username } = req.params;
+  
+    try {
+      const creator = await Creator.findOne({ username });
+      if (!creator) {
+        return res.status(404).json({ message: 'Creator not found' });
+      }
+  
+      creator.earnings += amount;
+      await creator.save();
+  
+      res.json({ message: 'Donation successful', newEarnings: creator.earnings });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = {registerCreator, loginCreator, getCreator, donateCreator};

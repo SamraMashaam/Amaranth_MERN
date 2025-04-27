@@ -6,6 +6,7 @@ const creatorSchema = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     bankNum: { type: String, required: true },
+    earnings: { type: Number, default: 0 }
 });
 
 // Hash password before saving
