@@ -1,0 +1,115 @@
+db.videos.insertOne({
+  title: "Hooked",
+  videoUrl: "/videos/Hooked.mp4",
+  likes: 57,
+  dislikes: 3,
+  comments: [
+    { user: "Sally", text: "Great video!" },
+    { user: "Mark", text: "Thanks for sharing." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "DoodLetMeGo"
+})
+
+db.videos.insertOne({
+  title: "Guitar",
+  videoUrl: "/videos/Guitar.mp4",
+  likes: 43,
+  dislikes: 1,
+  comments: [
+    { user: "Jackson89", text: "Super cool." },
+    { user: "Mark22", text: "Great music." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "Zabrowski"
+})
+
+db.videos.insertOne({
+  title: "Wintergatan - Marble Machine",
+  videoUrl: "/videos/Wintergatan - Marble Machine.mp4",
+  likes: 23,
+  dislikes: 1,
+  comments: [
+    { user: "Jackson89", text: "Super cool." },
+    { user: "Mark22", text: "Great music." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "Wintergatan"
+})
+
+db.videos.insertOne({
+  title: "Arcane Firelights",
+  videoUrl: "/videos/Firelights.mp4",
+  likes: 63,
+  dislikes: 2,
+  comments: [
+    { user: "Jackson89", text: "Super cool." },
+    { user: "Mark22", text: "Great music." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "RiotGames"
+})
+
+db.videos.insertOne({
+  title: "Cat",
+  videoUrl: "/videos/Cat.mp4",
+  likes: 73,
+  dislikes: 2,
+  comments: [
+    { user: "Mark22", text: "So cute." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "CatLover"
+})
+
+db.videos.insertOne({
+  title: "Cat on ice",
+  videoUrl: "/videos/Cat on ice.mp4",
+  likes: 78,
+  dislikes: 2,
+  comments: [
+    { user: "Mark22", text: "So cute." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "BiggerCatLover"
+})
+
+db.videos.insertOne({
+  title: "Zwaard",
+  videoUrl: "/videos/Zwaard.mp4",
+  likes: 8,
+  dislikes: 2,
+  comments: [
+    { user: "Ace", text: "Super awesome." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "GameTrailers"
+})
+
+db.videos.insertOne({
+  title: "Country Roads",
+  videoUrl: "/videos/Country Roads.mp4",
+  likes: 18,
+  dislikes: 2,
+  comments: [
+    { user: "Ace", text: "Super awesome." }
+  ],
+  kids: 0,
+  sponsored: 0,
+  flagged: 0,
+  creator: "Shar"
+})
