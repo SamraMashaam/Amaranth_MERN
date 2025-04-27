@@ -53,13 +53,31 @@ function RegisterCreator()
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => 
+    const handleSubmit = async (e) => 
     {
         e.preventDefault();
         
         if (validateForm()) {
-          // BACKEND
-          navigate("/");
+          try {
+            const response = await fetch('http://localhost:5000/api/creators/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+            });
+        
+            const data = await response.json();
+        
+            if (response.ok) {
+              console.log(data.message);
+              navigate("/"); // success, redirect
+            } else {
+              console.log(data.message); // show error
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
         } 
         else 
         {
@@ -100,6 +118,12 @@ return(
 
         <button type="submit">Let's go!</button>
         </form>
+        <p style={{ textAlign: 'center', marginTop: '1rem', color: '#F4CCE9' }}>
+            Already a creator?{' '}
+            <a href="/creatorlogin" style={{ color: '#D17D98', textDecoration: 'underline' }}>
+                Sign In
+            </a>
+            </p>
     </div>
 
 )

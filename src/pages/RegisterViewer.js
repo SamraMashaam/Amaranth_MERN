@@ -58,13 +58,31 @@ function RegisterViewer()
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => 
+    const handleSubmit = async (e) => 
     {
         e.preventDefault();
         
         if (validateForm()) {
-          // BACKEND
-          navigate("/");
+          try {
+            const response = await fetch('http://localhost:5000/api/viewers/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+            });
+        
+            const data = await response.json();
+        
+            if (response.ok) {
+              console.log(data.message);
+              navigate("/"); // success, redirect
+            } else {
+              console.log(data.message); // show error
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
         } 
         else 
         {
@@ -77,7 +95,7 @@ function RegisterViewer()
 return(
     <div>
       <h2>Register as a Viewer</h2>
-      <p>Welcome to Amaranth's ever growing community of creators!</p>
+      <p>Welcome to Amaranth!</p>
       <form className="creatorForm" onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
@@ -111,6 +129,12 @@ return(
 
         <button type="submit">Let's go!</button>
         </form>
+        <p style={{ textAlign: 'center', marginTop: '1rem', color: '#F4CCE9' }}>
+            Already have an account?{' '}
+            <a href="/viewerlogin" style={{ color: '#D17D98', textDecoration: 'underline' }}>
+                Sign In
+            </a>
+            </p>
     </div>
 
 )

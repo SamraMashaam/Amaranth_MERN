@@ -1,9 +1,7 @@
 import { useState } from 'react';
-// import { Bell, BellOff } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { FaBell, FaBellSlash } from 'react-icons/fa'; // Importing the icons
 
-
-// Mock data for initial state
 const initialCreators = [
   {
     id: 1,
@@ -81,21 +79,21 @@ export function Following() {
     });
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">Following</h1>
-        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+    <div className="Ccontainer">
+      <div className="settings-container">
+        <h2 className="settings-title">Following</h2>
+        <div className="settings-grid">
           <input
             type="text"
             placeholder="Search creators..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            className="settings-input"
           />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            className="followSelect"
           >
             <option value="recent">Most Recent</option>
             <option value="alphabetical">Alphabetical</option>
@@ -103,51 +101,32 @@ export function Following() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="creator-list">
         {filteredCreators.map(creator => (
-          <div
-            key={creator.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-          >
-            <div className="relative h-48">
+          <div key={creator.id} className="creator-card">
+            <div>
               <img
                 src={creator.avatarUrl}
                 alt={creator.name}
-                className="w-full h-full object-cover"
-                style={{height:100, width:100}}
+                style={{ height: 100, width: 100, borderRadius: '50%' }}
               />
             </div>
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900">{creator.name}</h3>
-                  <p className="text-gray-500">@{creator.username}</p>
-                </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => toggleNotifications(creator.id)}
-                    className={`p-2 rounded-full ${
-                      creator.notificationsEnabled
-                        ? 'bg-purple-100 text-purple-600'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {/* {creator.notificationsEnabled ? <Bell size={20} /> : <BellOff size={20} />} */}
-                    {creator.notificationsEnabled ? 'Notifs On' : 'Notifs Off'}
-                  </button>
-                </div>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm text-gray-600">Last streamed</p>
-                <p className="font-medium text-gray-900">{creator.lastStream}</p>
+            <div>
+              <h3 className="creator-label">{creator.name}</h3>
+              <p className="settings-value">@{creator.username}</p>
+              <button
+                onClick={() => toggleNotifications(creator.id)}
+                className={creator.notificationsEnabled ? 'sub-button' : 'fllw-button'}
+              >
+                {creator.notificationsEnabled ? <FaBell /> : <FaBellSlash />} {/* Bell icons here */}
+              </button>
+              <div>
+                <p className="settings-label">Last streamed:</p>
+                <p className="settings-value">{creator.lastStream}</p>
               </div>
               <button
                 onClick={() => toggleFollow(creator.id)}
-                className={`w-full py-2 px-4 rounded-md ${
-                  creator.isFollowing
-                    ? 'bg-purple-600 text-white hover:bg-purple-700'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={creator.isFollowing ? 'edit-btn' : 'edit-btn'}
               >
                 {creator.isFollowing ? 'Unfollow' : 'Follow'}
               </button>

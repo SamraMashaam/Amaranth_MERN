@@ -79,6 +79,7 @@ const VideoPlayer = () =>
                         <button onClick={() => skip(-10)}><FaBackward /></button>
                         <button onClick={() => skip(10)}><FaForward /></button>
                     </div>
+                    <div className="title-feedback">
                     <h2>Video Title</h2>
                     <div className="feedback">
                         <button onClick={likes} style={{ color: liked ? "#D17D98" : "#F4CCE9" }}><FaThumbsUp /></button>
@@ -91,6 +92,7 @@ const VideoPlayer = () =>
                                 <button onClick={() => setShowFlag(false)}>No</button>
                             </div>
                         )}
+                    </div>
                     </div>
                 </div>
             </div>
