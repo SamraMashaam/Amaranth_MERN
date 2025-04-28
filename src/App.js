@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterViewer from "./pages/RegisterViewer";
 import LoginViewer from "./pages/LoginViewer";
 import AccountSettings from "./pages/AccountSettings";
@@ -7,12 +7,15 @@ import CreatorList from "./pages/CreatorList";
 import Creator from "./pages/Creator";
 import RegisterCreator from "./pages/RegisterCreator";
 import VideoPlayer from "./pages/VideoPlayer";
-import { Subscriptions } from "./pages/Subscriptions";
-import { Following } from "./pages/Following";
+import { Subscriptions } from "./pages/Subscriptions";  // fixed import
+import { Following } from "./pages/Following";          // fixed import
 import HomePage from "./pages/HomePage";
 import LoginCreator from "./pages/LoginCreator";
 import Layout from "./pages/Layout";
 import DonationPage from "./pages/DonationPage";
+import SearchPage from "./pages/SearchPage";
+import UploadVideo from "./pages/UploadVideo";          // don't forget UploadVideo
+
 
 function App() {
     return (
@@ -34,6 +37,9 @@ function App() {
                     <Route path="/creators" element={<CreatorList />} />
                     <Route path="/creators/:username" element={<Creator />} />
                     <Route path="/creators/:username/donate" element={<DonationPage />} />
+                    <Route path="/video/:id" element={<VideoPlayer />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/upload-video" element={<UploadVideo />} /> {/* upload video page */}
                 </Route>
             </Routes>
         </Router>

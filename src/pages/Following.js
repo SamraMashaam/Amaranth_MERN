@@ -1,73 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { FaBell, FaBellSlash } from 'react-icons/fa'; // Importing the icons
-
-const initialCreators = [
-  {
-    id: 1,
-    name: 'Sarah Gaming',
-    username: 'sarahgaming',
-    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
-    lastStream: 'Just Chatting',
-    lastStreamDate: '2024-03-22T15:00:00Z',
-    isFollowing: true,
-    notificationsEnabled: true,
-  },
-  {
-    id: 2,
-    name: 'Tech with Mike',
-    username: 'techwithmike',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
-    lastStream: 'Coding a Game Engine',
-    lastStreamDate: '2024-03-21T18:30:00Z',
-    isFollowing: true,
-    notificationsEnabled: false,
-  },
-  {
-    id: 3,
-    name: 'ArtistAlley',
-    username: 'artistalley',
-    avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80',
-    lastStream: 'Digital Art Creation',
-    lastStreamDate: '2024-03-22T12:00:00Z',
-    isFollowing: true,
-    notificationsEnabled: true,
-  },
-];
+import { FaBell, FaBellSlash } from 'react-icons/fa';
+import axios from 'axios';
 
 export function Following() {
-  const [creators, setCreators] = useState(initialCreators);
+  const [creators, setCreators] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('recent');
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
 
-  const toggleFollow = (creatorId) => {
-    setCreators(creators.map(creator => {
-      if (creator.id === creatorId) {
-        const newState = !creator.isFollowing;
-        toast.success(newState ? `Following ${creator.name}` : `Unfollowed ${creator.name}`);
-        return { ...creator, isFollowing: newState };
-      }
-      return creator;
-    }));
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+      fetchFollows(storedUsername);
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchFollows = async (viewerUsername) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/follows/${viewerUsername}`);
+      setCreators(res.data);
+    } catch (err) {
+      console.error('Error fetching follows:', err);
+      toast.error('Failed to load followed creators');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const toggleNotifications = (creatorId) => {
-    setCreators(creators.map(creator => {
-      if (creator.id === creatorId) {
-        const newState = !creator.notificationsEnabled;
-        toast.success(
-          newState 
-            ? `Notifications enabled for ${creator.name}` 
-            : `Notifications disabled for ${creator.name}`
-        );
-        return { ...creator, notificationsEnabled: newState };
+  const toggleFollow = async (followId, creatorName) => {
+    try {
+      const creator = creators.find(c => c._id === followId);
+      const isFollowing = creator.isFollowing;
+
+      if (isFollowing) {
+        await axios.delete(`http://localhost:5000/api/follows/${followId}`);
+        setCreators(creators.map(c =>
+          c._id === followId ? { ...c, isFollowing: false } : c
+        ));
+        toast.success(`Unfollowed ${creatorName}`);
+      } else {
+        const res = await axios.post(`http://localhost:5000/api/follows`, {
+          viewerUsername: username,
+          creatorUsername: creatorName,
+        });
+        setCreators(creators.map(c =>
+          c._id === followId
+            ? { ...c, _id: res.data._id, isFollowing: true, notificationsEnabled: true }
+            : c
+        ));
+        toast.success(`Following ${creatorName}`);
       }
-      return creator;
-    }));
+    } catch (err) {
+      console.error('Error toggling follow:', err);
+      toast.error('Failed to update follow status');
+    }
+  };
+
+  const toggleNotifications = async (followId, creatorName) => {
+    try {
+      const res = await axios.put(`http://localhost:5000/api/follows/${followId}/notifications`);
+      setCreators(creators.map(creator =>
+        creator._id === followId
+          ? { ...creator, notificationsEnabled: res.data.notificationsEnabled }
+          : creator
+      ));
+      toast.success(
+        res.data.notificationsEnabled
+          ? `Notifications enabled for ${creatorName}`
+          : `Notifications disabled for ${creatorName}`
+      );
+    } catch (err) {
+      console.error('Error toggling notifications:', err);
+      toast.error('Failed to toggle notifications');
+    }
   };
 
   const filteredCreators = creators
-    .filter(creator => 
+    .filter(creator =>
       creator.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       creator.username.toLowerCase().includes(searchQuery.toLowerCase())
     )
@@ -77,6 +91,8 @@ export function Following() {
       }
       return a.name.localeCompare(b.name);
     });
+
+  if (loading) return <div>Loading followed creators...</div>;
 
   return (
     <div className="Ccontainer">
@@ -102,37 +118,41 @@ export function Following() {
       </div>
 
       <div className="creator-list">
-        {filteredCreators.map(creator => (
-          <div key={creator.id} className="creator-card">
-            <div>
-              <img
-                src={creator.avatarUrl}
-                alt={creator.name}
-                style={{ height: 100, width: 100, borderRadius: '50%' }}
-              />
-            </div>
-            <div>
-              <h3 className="creator-label">{creator.name}</h3>
-              <p className="settings-value">@{creator.username}</p>
-              <button
-                onClick={() => toggleNotifications(creator.id)}
-                className={creator.notificationsEnabled ? 'sub-button' : 'fllw-button'}
-              >
-                {creator.notificationsEnabled ? <FaBell /> : <FaBellSlash />} {/* Bell icons here */}
-              </button>
+        {filteredCreators.length > 0 ? (
+          filteredCreators.map(creator => (
+            <div key={creator._id} className="creator-card">
               <div>
-                <p className="settings-label">Last streamed:</p>
-                <p className="settings-value">{creator.lastStream}</p>
+                <img
+                  src={creator.avatarUrl}
+                  alt={creator.name}
+                  style={{ height: 100, width: 100, borderRadius: '50%' }}
+                />
               </div>
-              <button
-                onClick={() => toggleFollow(creator.id)}
-                className={creator.isFollowing ? 'edit-btn' : 'edit-btn'}
-              >
-                {creator.isFollowing ? 'Unfollow' : 'Follow'}
-              </button>
+              <div>
+                <h3 className="creator-label">{creator.name}</h3>
+                <p className="settings-value">@{creator.username}</p>
+                <button
+                  onClick={() => toggleNotifications(creator._id, creator.name)}
+                  className={creator.notificationsEnabled ? 'sub-button' : 'fllw-button'}
+                >
+                  {creator.notificationsEnabled ? <FaBell /> : <FaBellSlash />}
+                </button>
+                <div>
+                  <p className="settings-label">Last streamed:</p>
+                  <p className="settings-value">{creator.lastStream}</p>
+                </div>
+                <button
+                  onClick={() => toggleFollow(creator._id, creator.name)}
+                  className={creator.isFollowing ? 'edit-btn' : 'edit-btn'}
+                >
+                  {creator.isFollowing ? 'Unfollow' : 'Follow'}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No followed creators found.</p>
+        )}
       </div>
     </div>
   );

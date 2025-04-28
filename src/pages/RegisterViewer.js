@@ -76,9 +76,11 @@ function RegisterViewer()
         
             if (response.ok) {
               console.log(data.message);
-              navigate("/"); // success, redirect
+              localStorage.setItem("username", formData.username);
+              navigate("/");
             } else {
               console.log(data.message); // show error
+              alert(data.message)
             }
         } catch (error) {
             console.error('Error:', error);
